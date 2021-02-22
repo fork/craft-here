@@ -191,7 +191,7 @@ class RedirectsMaps extends Component
         if ($this->serverType === 'nginx') {
             return '    "' . $redirectFrom . '" "' . $redirectTo . '";';
         } elseif ($this->serverType === 'apache') {
-            return '"' . $redirectFrom . '" "' . $redirectTo . '"';
+            return $redirectFrom . ' ' . $redirectTo;
         } else {
             throw new Exception("$this->serverType not supported!");
         }

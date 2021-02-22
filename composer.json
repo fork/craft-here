@@ -2,7 +2,7 @@
     "name": "fork/craft-here",
     "description": "Use the SEO plugin redirects to write nginx and apache redirect map config files (perfect for headless Craft CMS Setups)",
     "type": "craft-plugin",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "keywords": [
         "craft",
         "cms",
