@@ -22,7 +22,7 @@
 
 ## Requirements
 
-- Craft CMS >= 3.5.x
+- Craft CMS 4
 - [Craft SEO Plugin](https://github.com/ethercreative/seo)
 
 ## Setup
