@@ -2,7 +2,7 @@
     "name": "fork/craft-here",
     "description": "Use the SEO plugin redirects to write nginx and apache redirect map config files (perfect for headless Craft CMS Setups)",
     "type": "craft-plugin",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "keywords": [
         "craft",
         "cms",
@@ -26,7 +26,8 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.0"
+        "craftcms/cms": "^4.0.0-alpha",
+        "ether/seo": "^4.0.0"
     },
     "autoload": {
         "psr-4": {
@@ -41,5 +42,16 @@
         "documentationUrl": "https://github.com/fork/craft-here/blob/master/README.md",
         "changelogUrl": "https://raw.githubusercontent.com/fork/craft-here/master/CHANGELOG.md",
         "class": "fork\\here\\HeRe"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "craftcms/rector": "dev-main"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
     }
 }
