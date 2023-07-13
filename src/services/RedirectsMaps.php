@@ -182,10 +182,14 @@ class RedirectsMaps extends Component
     {
         $basePath = $this->siteHelper->getSitePath($siteId);
 
+        $trailingSlash = mb_substr($redirect->uri, -1) === '/';
         $redirectFrom = FileHelper::normalizePath($basePath . $redirect->uri);
         $redirectTo = $this->isPath($redirect->to) ? FileHelper::normalizePath($basePath . $redirect->to) : $redirect->to;
 
         $redirectFrom = StringHelper::ensureLeft($redirectFrom, '/');
+        if ($trailingSlash) {
+            $redirectFrom = StringHelper::ensureRight($redirectFrom, '/');
+        }
         $redirectTo = UrlHelper::isAbsoluteUrl($redirectTo) ? $redirectTo : StringHelper::ensureLeft($redirectTo, '/');
 
         if ($this->serverType === 'nginx') {
