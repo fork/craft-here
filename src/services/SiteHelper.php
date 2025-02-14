@@ -18,21 +18,21 @@ class SiteHelper extends Component
      *
      * @var Site[]
      */
-    protected $sites = [];
+    protected array $sites = [];
 
     /**
      * list of the sites' hosts indexed by their id
      *
-     * @var string
+     * @var string[]
      */
-    protected $siteHosts = [];
+    protected array $siteHosts = [];
 
     /**
      * list of the sites' URI paths indexed by their id
      *
-     * @var string
+     * @var string[]
      */
-    protected $sitePaths = [];
+    protected array $sitePaths = [];
 
     /**
      * Returns the hostname for given site ID.
@@ -100,7 +100,7 @@ class SiteHelper extends Component
      *
      * @param int $id
      *
-     * @return \craft\models\Site|null
+     * @return Site|null
      */
     public function getSite(int $id): ?Site
     {

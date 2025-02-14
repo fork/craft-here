@@ -15,11 +15,13 @@ use craft\base\Plugin;
 use craft\events\PluginEvent;
 use craft\services\Plugins;
 
+use craft\services\Sites;
 use craft\web\Application;
 use ether\seo\records\RedirectRecord;
 use fork\here\services\EventHandler;
 use fork\here\services\RedirectsMaps;
 use fork\here\services\SiteHelper;
+use yii\base\Application as YiiApplication;
 use yii\base\Event;
 
 /**
@@ -29,6 +31,9 @@ use yii\base\Event;
  * @package   HeRe
  * @since     1.0.0
  *
+ * @property EventHandler $eventHandler
+ * @property RedirectsMaps $redirectsMaps
+ * @property SiteHelper $siteHelper
  */
 class HeRe extends Plugin
 {
@@ -38,7 +43,7 @@ class HeRe extends Plugin
     /**
      * @var HeRe
      */
-    public static $plugin;
+    public static HeRe $plugin;
 
     // Public Properties
     // =========================================================================
@@ -64,7 +69,7 @@ class HeRe extends Plugin
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         self::$plugin = $this;
@@ -86,7 +91,7 @@ class HeRe extends Plugin
                 //  whenever a site (in the multi-site settings) has been saved or deleted --> trigger re-/creation of the redirects maps
                 Event::on(Sites::class, 'after*', [$this->eventHandler, 'handleSitesEvent']);
                 //  at the end of processing any CP request --> re-/create the redirects maps
-                Event::on(Application::class, Application::EVENT_AFTER_REQUEST, [$this->eventHandler, 'handleApplicationEvent']);
+                Event::on(Application::class, YiiApplication::EVENT_AFTER_REQUEST, [$this->eventHandler, 'handleApplicationEvent']);
             }
 
             if (Craft::$app->getRequest()->getIsConsoleRequest()) {
@@ -114,17 +119,5 @@ class HeRe extends Plugin
                 }
             }
         );
-
-        Craft::info(
-            Craft::t(
-                'here',
-                '{name} plugin loaded',
-                ['name' => $this->name]
-            ),
-            __METHOD__
-        );
     }
-
-    // Protected Methods
-    // =========================================================================
 }
