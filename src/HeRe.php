@@ -10,11 +10,10 @@
 
 namespace fork\here;
 
-
 use Craft;
 use craft\base\Plugin;
-use craft\services\Plugins;
 use craft\events\PluginEvent;
+use craft\services\Plugins;
 
 use craft\web\Application;
 use ether\seo\records\RedirectRecord;
@@ -128,5 +127,4 @@ class HeRe extends Plugin
 
     // Protected Methods
     // =========================================================================
-
 }

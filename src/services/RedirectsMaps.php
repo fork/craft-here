@@ -20,19 +20,18 @@ use yii\base\Exception;
  */
 class RedirectsMaps extends Component
 {
-
     /**
      * status code respectively the redirect type for "301 MOVED PERMANENTLY"
      */
-    const STATUS_CODE_301_MOVED_PERMANENTLY = '301';
+    public const STATUS_CODE_301_MOVED_PERMANENTLY = '301';
     /**
      * status code respectively the redirect type for "302 FOUND" (aka "302 MOVED TEMPORARILY")
      */
-    const STATUS_CODE_302_FOUND = '302';
+    public const STATUS_CODE_302_FOUND = '302';
     /**
      * list of redirect types indexed by response status code
      */
-    const REDIRECT_TYPES = [
+    public const REDIRECT_TYPES = [
         self::STATUS_CODE_301_MOVED_PERMANENTLY => 'moved',
         self::STATUS_CODE_302_FOUND => 'found',
     ];

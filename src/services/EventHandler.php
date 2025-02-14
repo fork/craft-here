@@ -15,7 +15,6 @@ use yii\base\Event;
  */
 class EventHandler extends Component
 {
-
     /**
      * @var \fork\here\services\RedirectsMaps
      */
@@ -42,10 +41,10 @@ class EventHandler extends Component
     public function handleRedirectRecordEvent(Event $event)
     {
         if ($event->sender instanceof RedirectRecord and in_array($event->name, [
-                RedirectRecord::EVENT_AFTER_INSERT,
-                RedirectRecord::EVENT_AFTER_UPDATE,
-                RedirectRecord::EVENT_AFTER_DELETE,
-            ])) {
+            RedirectRecord::EVENT_AFTER_INSERT,
+            RedirectRecord::EVENT_AFTER_UPDATE,
+            RedirectRecord::EVENT_AFTER_DELETE,
+        ])) {
             $this->redirectsMaps->triggerRecreation();
         }
     }
@@ -59,9 +58,9 @@ class EventHandler extends Component
     public function handleSitesEvent(Event $event)
     {
         if ($event->sender instanceof Sites and in_array($event->name, [
-                Sites::EVENT_AFTER_SAVE_SITE,
-                Sites::EVENT_AFTER_DELETE_SITE,
-            ])) {
+            Sites::EVENT_AFTER_SAVE_SITE,
+            Sites::EVENT_AFTER_DELETE_SITE,
+        ])) {
             $this->redirectsMaps->triggerRecreation();
         }
     }

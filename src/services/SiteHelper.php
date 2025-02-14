@@ -13,7 +13,6 @@ use yii\base\Component;
  */
 class SiteHelper extends Component
 {
-
     /**
      * list of sites indexed by their id
      *

@@ -15,7 +15,6 @@ use yii\console\ExitCode;
  */
 class MapsController extends Controller
 {
-
     /**
      * Re-/creates the redirects maps while depending on the redirects as set in the SEO plugin.
      *
