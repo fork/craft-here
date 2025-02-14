@@ -46,12 +46,21 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
-        "craftcms/rector": "dev-main"
+        "craftcms/ecs": "dev-main",
+        "craftcms/phpstan": "dev-main",
+        "craftcms/rector": "dev-main",
+        "friendsofphp/php-cs-fixer": "^3.64.0",
+        "phpstan/phpstan": "^1.12.6"
     },
     "config": {
         "allow-plugins": {
             "yiisoft/yii2-composer": true,
             "craftcms/plugin-installer": true
         }
+    },
+    "scripts": {
+        "check-cs": "ecs check --ansi",
+        "fix-cs": "ecs check --ansi --fix",
+        "phpstan": "phpstan analyze --memory-limit=1G -c phpstan.neon"
     }
 }
