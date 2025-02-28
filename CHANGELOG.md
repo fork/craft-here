@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+# 3.0.0 - 2025-02-28
+
+### Added
+
+- Add support for Craft 5, drop support for Craft 4
+
 # 2.0.1 - 2023-07-13
 
 ### Fixed

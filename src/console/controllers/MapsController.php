@@ -1,12 +1,14 @@
 <?php
 
+/** @noinspection PhpUnused */
+
 namespace fork\here\console\controllers;
 
 use craft\console\Controller;
-use craft\helpers\Console;
 use fork\here\HeRe;
 use Throwable;
 use yii\console\ExitCode;
+use yii\helpers\BaseConsole;
 
 /**
  * Manages redirects maps.
@@ -15,22 +17,17 @@ use yii\console\ExitCode;
  */
 class MapsController extends Controller
 {
-
     /**
      * Re-/creates the redirects maps while depending on the redirects as set in the SEO plugin.
      *
-     * @return string
+     * @return int
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function actionRecreate()
+    public function actionRecreate(): int
     {
-        try {
-            HeRe::getInstance()->redirectsMaps->recreateMaps();
-            $this->stdout('✅ Re-/created redirects maps.' . PHP_EOL, Console::FG_GREEN);
-        } catch (Throwable $e) {
-            throw $e;
-        }
+        HeRe::getInstance()->redirectsMaps->recreateMaps();
+        $this->stdout('✅ Re-/created redirects maps.' . PHP_EOL, BaseConsole::FG_GREEN);
 
         return ExitCode::OK;
     }
@@ -40,16 +37,12 @@ class MapsController extends Controller
      *
      * @return int
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function actionClear()
+    public function actionClear(): int
     {
-        try {
-            HeRe::getInstance()->redirectsMaps->clear();
-            $this->stdout('✅ Removed redirects maps.' . PHP_EOL, Console::FG_GREEN);
-        } catch (Throwable $e) {
-            throw $e;
-        }
+        HeRe::getInstance()->redirectsMaps->clear();
+        $this->stdout('✅ Removed redirects maps.' . PHP_EOL, BaseConsole::FG_GREEN);
 
         return ExitCode::OK;
     }

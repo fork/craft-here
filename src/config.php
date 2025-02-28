@@ -3,7 +3,7 @@
 return [
     // Global settings
     '*' => [
-        'serverType' => 'nginx' // or 'apache'
+        'serverType' => 'nginx', // or 'apache'
     ],
 
     // Dev environment settings

@@ -9,6 +9,7 @@ use craft\helpers\UrlHelper;
 use ether\seo\records\RedirectRecord;
 use ether\seo\Seo;
 use yii\base\Component;
+use yii\base\ErrorException;
 use yii\base\Exception;
 
 /**
@@ -20,19 +21,18 @@ use yii\base\Exception;
  */
 class RedirectsMaps extends Component
 {
-
     /**
      * status code respectively the redirect type for "301 MOVED PERMANENTLY"
      */
-    const STATUS_CODE_301_MOVED_PERMANENTLY = '301';
+    public const STATUS_CODE_301_MOVED_PERMANENTLY = '301';
     /**
      * status code respectively the redirect type for "302 FOUND" (aka "302 MOVED TEMPORARILY")
      */
-    const STATUS_CODE_302_FOUND = '302';
+    public const STATUS_CODE_302_FOUND = '302';
     /**
      * list of redirect types indexed by response status code
      */
-    const REDIRECT_TYPES = [
+    public const REDIRECT_TYPES = [
         self::STATUS_CODE_301_MOVED_PERMANENTLY => 'moved',
         self::STATUS_CODE_302_FOUND => 'found',
     ];
@@ -40,36 +40,36 @@ class RedirectsMaps extends Component
     /**
      * the server type ("nginx" or "apache")
      *
-     * @var string
+     * @var string $serverType
      */
-    protected $serverType;
+    protected string $serverType;
 
     /**
      * the config from site/config/redirects.php
      *
-     * @var array
+     * @var array $config
      */
-    protected $config;
+    protected array $config;
 
     /**
      * flag to determine if the redirects map has to be re-/created
      *
      * @var bool
      */
-    protected $isRecreationTriggered = false;
+    protected bool $isRecreationTriggered = false;
 
     /**
-     * @var \fork\here\services\SiteHelper
+     * @var SiteHelper $siteHelper
      */
-    protected $siteHelper;
+    protected SiteHelper $siteHelper;
 
     /**
      * RedirectsMaps constructor.
      *
-     * @param \fork\here\services\SiteHelper $siteHelper
+     * @param SiteHelper $siteHelper
      * @param array $config
      */
-    public function __construct(SiteHelper $siteHelper, $config = [])
+    public function __construct(SiteHelper $siteHelper, array $config = [])
     {
         $this->siteHelper = $siteHelper;
         $this->config = Craft::$app->getConfig()->getConfigFromFile('redirects');
@@ -85,9 +85,9 @@ class RedirectsMaps extends Component
      *
      * @param bool $recreateMap
      *
-     * @see \fork\here\services\RedirectsMaps::recreateMapsIfTriggered()
+     * @see RedirectsMaps::recreateMapsIfTriggered
      */
-    public function triggerRecreation($recreateMap = true)
+    public function triggerRecreation(bool $recreateMap = true): void
     {
         $this->isRecreationTriggered = $recreateMap;
     }
@@ -95,11 +95,11 @@ class RedirectsMaps extends Component
     /**
      * Re-/creates the redirects maps unless the re-/creation is not properly triggered using the `triggerRecreation()` method.
      *
-     * @throws \yii\base\Exception
+     * @throws Exception
      *
-     * @see \fork\here\services\RedirectsMaps::triggerRecreation()
+     * @see RedirectsMaps::triggerRecreation
      */
-    public function recreateMapsIfTriggered()
+    public function recreateMapsIfTriggered(): void
     {
         if ($this->isRecreationTriggered) {
             $this->recreateMaps();
@@ -109,9 +109,9 @@ class RedirectsMaps extends Component
     /**
      * Re-/creates the redirects maps regardless of re-/creation has been triggered using the `triggerRecreation()` method.
      *
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
-    public function recreateMaps()
+    public function recreateMaps(): void
     {
         $maps = $this->getRedirectsMapsByType();
 
@@ -128,6 +128,7 @@ class RedirectsMaps extends Component
      * Returns an array of redirects maps grouped by the HTTP response code respectively by the redirect type which is either "301" or "302".
      *
      * @return array
+     * @throws Exception
      */
     protected function getRedirectsMapsByType(): array
     {
@@ -145,8 +146,8 @@ class RedirectsMaps extends Component
             $maps[$host]['302'] = [];
         }
 
-        /** @var RedirectRecord[] $redirects */
-        foreach ($redirectRecords as $siteId => $redirects) {
+        /** @var RedirectRecord[]|null[] $redirects */
+        foreach ($redirectRecords as $redirects) {
             foreach ($redirects as $redirect) {
                 if (!empty($redirect)) {
                     $siteId = $redirect->siteId;
@@ -173,10 +174,11 @@ class RedirectsMaps extends Component
     /**
      * Returns an entry to be appended to the redirects map for given redirect record.
      *
-     * @param \ether\seo\records\RedirectRecord $redirect
+     * @param RedirectRecord $redirect
      * @param int $siteId
      *
      * @return string
+     * @throws Exception
      */
     protected function getEntryForRedirectMap(RedirectRecord $redirect, int $siteId): string
     {
@@ -219,9 +221,9 @@ class RedirectsMaps extends Component
      * @param array $maps
      * @param string $statusCode
      *
-     * @throws \yii\base\Exception
+     * @throws Exception
      */
-    protected function recreateMapFile(array $maps, string $statusCode)
+    protected function recreateMapFile(array $maps, string $statusCode): void
     {
         foreach ($maps as $siteHost => $mapsForSite) {
             $tempDir = FileHelper::normalizePath(Craft::$app->getPath()->getTempPath());
@@ -294,7 +296,7 @@ class RedirectsMaps extends Component
     /**
      * Tells the nginx server to reload its configs for the current redirects maps to take effect.
      */
-    protected function reloadNginxConfigs()
+    protected function reloadNginxConfigs(): void
     {
         $reloadCommand = $this->config && !empty($this->config['redirectsReloadCommand']) ? $this->config['redirectsReloadCommand'] : null;
 
@@ -308,9 +310,9 @@ class RedirectsMaps extends Component
     /**
      * Clears the redirects directory.
      *
-     * @throws \yii\base\ErrorException
+     * @throws ErrorException
      */
-    public function clear()
+    public function clear(): void
     {
         FileHelper::clearDirectory(FileHelper::normalizePath($this->getRedirectsDir()), [
             'except' => ['.gitignore'],
@@ -318,13 +320,13 @@ class RedirectsMaps extends Component
     }
 
     /**
-     * Returns the direcoty path where all redirects maps are stored.
+     * Returns the directory path where all redirects maps are stored.
      *
      * The returned path is not normalized, do so using the `\craft\helpers\FileHelper` service.
      *
      * @return string
      *
-     * @see \craft\helpers\FileHelper
+     * @see FileHelper
      */
     protected function getRedirectsDir(): string
     {

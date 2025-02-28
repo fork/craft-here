@@ -1,5 +1,5 @@
 <div align="left">
-  <img width="600" title="Craft Here" src="https://github.fork.de/Craft_HeRe_201223.svg">
+  <img width="600" title="Craft Here" src="/resources/img/plugin-logo.png">
 </div>
 
 **Table of contents**
@@ -22,7 +22,7 @@
 
 ## Requirements
 
-- Craft CMS 4
+- Craft CMS 5
 - [Craft SEO Plugin](https://github.com/ethercreative/seo)
 
 ## Setup
@@ -64,12 +64,11 @@ return [
         //'redirectsReloadCommand' => 'sudo /etc/init.d/nginx reload',
     ],
 ];
-
 ```
 
 In your server configuration include the redirect map files (which will be created after plugin has been installed):
 
-```
+```nginx
 # NGINX EXAMPLE:
 
 # see https://serverfault.com/a/890715/487169 for why we use "[.]" instead of a regular period "."
@@ -92,7 +91,7 @@ if ($redirect_found != "") {
 }
 ```
 
-```
+```apacheconf
 # APACHE EXAMPLE:
 
 RewriteEngine On
@@ -118,7 +117,7 @@ After that just use the SEO Plugin UI to manage your redirects.
 ---
 
 <div align="center">
-  <img src="https://github.fork.de/heart.png" width="38" height="41" alt="Fork Logo" />
+  <img src="/resources/img/heart.png" width="38" height="41" alt="Fork Logo" />
 
   <p>Brought to you by <a href="https://www.fork.de">Fork Unstable Media GmbH</a></p>
 </div>
